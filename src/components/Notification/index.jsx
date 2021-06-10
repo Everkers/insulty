@@ -15,7 +15,7 @@ export default function Notification({ message, close, isVisible }) {
     <>
       <div
         aria-live='assertive'
-        className='fixed inset-0 flex ite ms-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start'>
+        className=' z-10 fixed inset-0 flex ite ms-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start'>
         <div className='w-full flex flex-col items-center space-y-4 sm:items-end'>
           <Transition
             show={isVisible}

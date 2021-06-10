@@ -2,6 +2,7 @@ export const initialState = {
   notification: {
     show: false,
     message: null,
+    authenticated: false,
   },
 }
 export default function reducer(state, action) {
@@ -10,6 +11,11 @@ export default function reducer(state, action) {
       return {
         ...state,
         notification: action.payload,
+      }
+    case "set_authenticated":
+      return {
+        ...state,
+        authenticated: action.payload,
       }
     default:
       return state

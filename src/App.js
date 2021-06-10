@@ -1,5 +1,7 @@
 import "styles/output.css"
 import UnAthenticatedApp from "routes/unauthenticated-app"
+import AthenticatedApp from "routes/authenticated-app"
+import React from "react"
 import { useRootContext } from "contexts/root-provider"
 import Notification from "components/Notification"
 const App = () => {
@@ -11,9 +13,14 @@ const App = () => {
   }
   const validCords =
     cords.username === "everkers" && cords.password === "123456"
-  console.log(cords, validCords)
+  React.useEffect(() => {
+    dispatch({
+      type: "set_authenticated",
+      payload: validCords,
+    })
+  }, [validCords, dispatch])
   return (
-    <>
+    <div class='bg-gray-900 min-h-screen'>
       <Notification
         close={() =>
           dispatch({
@@ -24,8 +31,8 @@ const App = () => {
         message={state.notification.message}
         isVisible={state.notification.show}
       />
-      {validCords ? "loggedin" : <UnAthenticatedApp />}
-    </>
+      {validCords ? <AthenticatedApp /> : <UnAthenticatedApp />}
+    </div>
   )
 }
 

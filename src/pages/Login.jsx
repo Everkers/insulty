@@ -6,11 +6,12 @@ const Login = () => {
   const [password, setPassword] = React.useState()
   const { dispatch } = useRootContext()
   const handleSubmit = () => {
-    // set cords to localstorage
-    localStorage.setItem("username", username)
-    localStorage.setItem("password", password)
     const validCords = username === "everkers" && password === "123456"
     if (validCords) {
+      // set cords to localstorage
+      localStorage.setItem("username", username)
+      localStorage.setItem("password", password)
+      // show success notification
       dispatch({
         type: "set_notification",
         payload: { message: "Successfully logged in", show: true },
