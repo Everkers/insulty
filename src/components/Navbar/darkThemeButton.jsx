@@ -4,7 +4,6 @@ const DarkThemeButton = () => {
   const [theme, setTheme] = React.useState(localStorage.theme)
   const toggle = () => {
     const currentTheme = localStorage.theme
-    console.log(currentTheme)
     if (currentTheme === "dark") {
       setTheme("light")
       localStorage.theme = "light"
