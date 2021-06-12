@@ -12,7 +12,7 @@ const InsultCard = () => {
   }
 
   return (
-    <div class='bg-gray-800 py-7 px-5 w-auto min-h-40 rounded-xl'>
+    <div class='bg-white border border-gray-800 dark:border-gray-900 dark:bg-gray-800 py-7 px-5 w-auto min-h-40 rounded-xl'>
       <div class='flex items-center justify-between'>
         <div class='flex items-center font-bold space-x-3'>
           <img
@@ -20,7 +20,7 @@ const InsultCard = () => {
             src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
             alt=''
           />
-          <span class='text-sm text-gray-50'>Everkers</span>
+          <span class='text-sm text-gray-800 dark:text-gray-50'>Everkers</span>
         </div>
         <span class='ml-auto'>
           <Menu as='div' className='relative inline-block text-left'>
@@ -100,16 +100,16 @@ const InsultCard = () => {
         <span class='uppercase text-xs font-semibold text-gray-600'>
           League of legends
         </span>
-        <p class='text-xl font-bold text-gray-50'>
+        <p class='text-xl font-bold dark:text-gray-50 text-gray-800'>
           Thou cockered shag-haired bugbear!
         </p>
       </div>
       <div class='flex justify-between'>
         <div class='flex space-x-2'>
-          <ArrowCircleUpIcon class='h-7 cursor-pointer w-7 text-indigo-600' />
-          <ArrowCircleDownIcon class='h-7  cursor-pointer w-7 text-gray-600' />
+          <ArrowCircleUpIcon class='h-6 cursor-pointer w-6 text-indigo-600' />
+          <ArrowCircleDownIcon class='h-6  cursor-pointer w-6 text-gray-600' />
         </div>
-        <HeartIcon class='h-7 w-7 cursor-pointer  text-gray-600 mr-2' />
+        <HeartIcon class='h-6 w-6 cursor-pointer  text-gray-600 mr-2' />
       </div>
     </div>
   )

@@ -27,9 +27,9 @@ const Home = () => {
       </SlideOver>
       <div className='max-w-3xl  mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8'>
         <main className='px-10 md:px-0  md:col-span-8  xl:col-span-8'>
-          <div className='pb-2 flex justify-between items-end mb-5 border-b border-gray-800'>
+          <div className='pb-2 flex justify-between items-end mb-5 border-b border-gray-300 dark:border-gray-800'>
             <div class='flex lg:block items-center  w-full justify-between'>
-              <h3 className='text-xl  leading-6 font-medium text-gray-50'>
+              <h3 className='text-xl  leading-6 font-medium text-gray-900 dark:text-gray-50'>
                 Insults
               </h3>
               <p className='mt-2 hidden lg:block max-w-4xl text-sm text-gray-500'>
@@ -57,7 +57,7 @@ const Home = () => {
         <aside className='lg:block hidden  xl:pt-10 md:p-0 px-5  md:col-span-4'>
           <div className='sticky top-6 space-y-4'>
             <div class='mb-7'>
-              <h3 className='text-lg leading-6 font-medium text-gray-50'>
+              <h3 className='text-lg leading-6 font-medium text-gray-800 dark:text-gray-50'>
                 Filter
               </h3>
               <p className='mt-1 text-sm text-gray-500'>
@@ -71,7 +71,7 @@ const Home = () => {
             <div className='flex justify-end'>
               <button
                 type='button'
-                className='bg-gray-700 py-2 px-4 rounded-md shadow-sm text-sm font-medium text-gray-50 hover:bg-gray-800 focus:outline-none  '>
+                className='border-gray-300 border dark:border-gray-800 dark:bg-gray-700 py-2 px-4 rounded-md shadow-sm text-sm font-medium text-gray-800 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none  '>
                 Clear
               </button>
               <button

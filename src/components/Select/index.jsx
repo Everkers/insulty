@@ -14,7 +14,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-const Select = ({ onChange, label }) => {
+const Select = ({
+  onChange = () => {},
+  label,
+  mainButtonClasses = "dark:bg-gray-800",
+}) => {
   const [selected, setSelected] = useState(people[0])
 
   return (
@@ -26,12 +30,13 @@ const Select = ({ onChange, label }) => {
       }}>
       {({ open }) => (
         <>
-          <Listbox.Label className='block text-sm font-medium text-gray-50'>
+          <Listbox.Label className='block mb-3 text-sm font-medium text-gray-800 dark:text-gray-50'>
             {label}
           </Listbox.Label>
           <div className='mt-1 relative'>
-            <Listbox.Button className='bg-gray-800 relative w-full  rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
-              <span className='block text-gray-50 truncate'>
+            <Listbox.Button
+              className={`dark:border-gray-900 ${mainButtonClasses} bg-white  border border-gray-300 shadow-sm  dark:shadow-none  relative w-full rounded-md pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}>
+              <span className='block text-gray-800 dark:text-gray-50 truncate'>
                 {selected.name}
               </span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
@@ -50,13 +55,15 @@ const Select = ({ onChange, label }) => {
               leaveTo='opacity-0'>
               <Listbox.Options
                 static
-                className='absolute z-10 mt-1 w-full bg-gray-800 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
+                className='absolute z-20 mt-1 w-full bg-white border dark:border-gray-900 border-gray-300 dark:border-none shadow-sm dark:shadow-none dark:border-0 dark:bg-gray-800 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
                 {people.map((person) => (
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
                       classNames(
-                        active ? "text-white bg-indigo-600" : "text-gray-50",
+                        active
+                          ? "text-white bg-indigo-600"
+                          : "dark:text-gray-50 text-gray-800",
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }
@@ -96,4 +103,5 @@ export default Select
 Select.prototype = {
   onChange: PropTypes.func,
   label: PropTypes.string,
+  mainButtonClasses: PropTypes.string,
 }

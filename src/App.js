@@ -3,8 +3,11 @@ import UnAthenticatedApp from "routes/unauthenticated-app"
 import AthenticatedApp from "routes/authenticated-app"
 import React from "react"
 import { useRootContext } from "contexts/root-provider"
+import InsultModal from "components/InsultModal"
 import Notification from "components/Notification"
+import useDarkTheme from "hooks/useDarkTheme"
 const App = () => {
+  useDarkTheme()
   const { state, dispatch } = useRootContext()
   // testing cords from localstorage
   const cords = {
@@ -20,7 +23,8 @@ const App = () => {
     })
   }, [validCords, dispatch])
   return (
-    <div class='bg-gray-900 min-h-screen'>
+    <div class='bg-white dark:bg-gray-900 min-h-screen'>
+      <InsultModal />
       <Notification
         close={() =>
           dispatch({
