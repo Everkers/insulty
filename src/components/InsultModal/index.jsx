@@ -69,14 +69,14 @@ export default function Example() {
                   class='dark:text-gray-300 text-gray-800 outline-none bg-gray-200 dark:bg-gray-900 text-sm w-full py-2 px-2 rounded-md placeholder-gray-700 placeholder-opacity-85'
                   placeholder='Type something'
                 />
-                <div class='grid grid-cols-3 gap-4'>
+                <div class='grid flex items-end grid-cols-3 gap-4'>
                   <div class=' col-span-2 '>
                     <Select mainButtonClasses='dark:bg-gray-700 ' />
                   </div>
                   <button
                     onClick={onSubmit}
                     type='button'
-                    className='tems-center   border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none'>
+                    className='items-center border border-transparent py-3 rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none'>
                     create
                   </button>
                 </div>
