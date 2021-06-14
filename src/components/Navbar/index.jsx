@@ -42,7 +42,7 @@ const Navbar = () => {
               <div className='flex'>
                 <div className='-ml-2 mr-2 flex items-center md:hidden'>
                   {/* Mobile menu button */}
-                  <Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
+                  <Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-800 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
                     <span className='sr-only'>Open main menu</span>
                     {open ? (
                       <XIcon className='block h-6 w-6' aria-hidden='true' />
@@ -134,7 +134,7 @@ const Navbar = () => {
           </div>
 
           <Disclosure.Panel className='md:hidden'>
-            <div className='pt-4 pb-3 border-t border-gray-700'>
+            <div className='pt-4 pb-3 border-t border-gray-200 dark:border-gray-700'>
               <div className='flex items-center px-5 sm:px-6'>
                 <div className='flex-shrink-0'>
                   <img
@@ -144,7 +144,7 @@ const Navbar = () => {
                   />
                 </div>
                 <div className='ml-3'>
-                  <div className='text-base font-medium text-white'>
+                  <div className='text-base font-medium text-gray-800 dark:text-white'>
                     {user.name}
                   </div>
                   <div className='text-sm font-medium text-gray-400'>
@@ -157,7 +157,7 @@ const Navbar = () => {
                   <span
                     key={item.name}
                     onClick={item.onClick}
-                    className='block px-3 cursor-pointer py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
+                    className='block px-3 cursor-pointer py-2 rounded-md text-base font-medium text-gray-400 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700'>
                     {item.name}
                   </span>
                 ))}

@@ -28,7 +28,7 @@ export default function Example() {
         className='fixed z-10 inset-0 '
         open={state.insultModalShow}
         onClose={closeModal}>
-        <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
+        <div className='flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
           <Transition.Child
             as={Fragment}
             enter='ease-out duration-300'
@@ -54,7 +54,7 @@ export default function Example() {
             leave='ease-in duration-200'
             leaveFrom='opacity-100 translate-y-0 sm:scale-100'
             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
-            <div className='inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6'>
+            <div className=' w-96 inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-5 pt-5 pb-4 text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6'>
               <div class='flex justify-between'>
                 <h1 class='dark:text-gray-50 text-gray-800 font-semibold text  text-xl'>
                   Create Insult
