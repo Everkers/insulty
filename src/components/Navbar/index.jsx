@@ -3,8 +3,10 @@ import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { MenuIcon, XIcon } from "@heroicons/react/outline"
 import { useRootContext } from "contexts/root-provider"
 import { PlusIcon } from "@heroicons/react/solid"
+import { useAuthContext } from "contexts/Authentication"
 import DarkThemeButton from "./darkThemeButton"
 const Navbar = () => {
+  const {logout} = useAuthContext()
   const { dispatch } = useRootContext()
   const user = {
     name: "Tom Cook",
@@ -17,12 +19,7 @@ const Navbar = () => {
     {
       name: "Sign out",
       onClick: () => {
-        localStorage.removeItem("username")
-        localStorage.removeItem("password")
-        dispatch({
-          type: "set_authenticated",
-          payload: false,
-        })
+        logout()
       },
       href: "#",
     },

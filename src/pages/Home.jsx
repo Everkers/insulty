@@ -4,6 +4,7 @@ import InsultCard from "components/InsultCard"
 import SlideOver from "components/SlideOver"
 import { ViewGridIcon } from "@heroicons/react/solid"
 import { ViewGridIcon as ViewGridIconOutline } from "@heroicons/react/outline"
+import { Transition } from "@headlessui/react"
 const Home = () => {
   const onChange = (val) => {
     console.log(val)
@@ -68,7 +69,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-
           <ul className={`grid grid-cols-1 gap-6 ${gridMode.class}`}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
               return (

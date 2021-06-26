@@ -1,4 +1,5 @@
 import "styles/output.css"
+import { AUTH_STATUS, useAuthContext } from "contexts/Authentication"
 import UnAthenticatedApp from "routes/unauthenticated-app"
 import AthenticatedApp from "routes/authenticated-app"
 import React from "react"
@@ -6,22 +7,14 @@ import { useRootContext } from "contexts/root-provider"
 import InsultModal from "components/InsultModal"
 import Notification from "components/Notification"
 import useDarkTheme from "hooks/useDarkTheme"
+import FullPageLoading from "pages/FullPageLoading"
 const App = () => {
   useDarkTheme()
+  const { authenticated, status: authStatus } = useAuthContext()
   const { state, dispatch } = useRootContext()
-  // testing cords from localstorage
-  const cords = {
-    username: localStorage.getItem("username"),
-    password: localStorage.getItem("password"),
+  if (authStatus === AUTH_STATUS.IDLE || authStatus === AUTH_STATUS.PENDING) {
+    return <FullPageLoading />
   }
-  const validCords =
-    cords.username === "everkers" && cords.password === "123456"
-  React.useEffect(() => {
-    dispatch({
-      type: "set_authenticated",
-      payload: validCords,
-    })
-  }, [validCords, dispatch])
   return (
     <div class='bg-white dark:bg-gray-900 min-h-screen'>
       <InsultModal />
@@ -35,7 +28,7 @@ const App = () => {
         message={state.notification.message}
         isVisible={state.notification.show}
       />
-      {validCords ? <AthenticatedApp /> : <UnAthenticatedApp />}
+      {authenticated ? <AthenticatedApp /> : <UnAthenticatedApp />}
     </div>
   )
 }
