@@ -1,14 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import PropTypes from "prop-types"
-const people = [
-  { id: 1, name: "League of legends" },
-  { id: 2, name: "OverWatch" },
-  { id: 3, name: "Dota 2" },
-  { id: 4, name: "Fortnite" },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -17,17 +11,16 @@ function classNames(...classes) {
 const Select = ({
   onChange = () => {},
   label,
+  data=[],
+  value='Select a game',
+  defaultValue='',
   mainButtonClasses = "dark:bg-gray-800",
 }) => {
-  const [selected, setSelected] = useState(people[0])
 
   return (
     <Listbox
-      value={selected}
-      onChange={(val) => {
-        onChange(val)
-        setSelected(val)
-      }}>
+      value={value}
+      onChange={onChange}>
       {({ open }) => (
         <>
           <Listbox.Label className='block mb-3 text-sm font-medium text-gray-800 dark:text-gray-50'>
@@ -37,7 +30,7 @@ const Select = ({
             <Listbox.Button
               className={`dark:border-gray-900 ${mainButtonClasses} bg-white  border border-gray-300 shadow-sm  dark:shadow-none  relative w-full rounded-md pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}>
               <span className='block text-gray-800 dark:text-gray-50 truncate'>
-                {selected.name}
+                { defaultValue || data.find(item=> item._id === value).name   }
               </span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                 <SelectorIcon
@@ -56,9 +49,9 @@ const Select = ({
               <Listbox.Options
                 static
                 className='absolute z-20 mt-1 w-full bg-white border dark:border-gray-900 border-gray-300 dark:border-none shadow-sm dark:shadow-none dark:border-0 dark:bg-gray-800 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
-                {people.map((person) => (
+                {data.map((option) => (
                   <Listbox.Option
-                    key={person.id}
+                    key={option._id}
                     className={({ active }) =>
                       classNames(
                         active
@@ -67,7 +60,7 @@ const Select = ({
                         "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }
-                    value={person}>
+                    value={option._id}>
                     {({ selected, active }) => (
                       <>
                         <span
@@ -75,7 +68,7 @@ const Select = ({
                             selected ? "font-semibold" : "font-normal",
                             "block truncate"
                           )}>
-                          {person.name}
+                          {option.name}
                         </span>
 
                         {selected ? (
@@ -103,5 +96,7 @@ export default Select
 Select.prototype = {
   onChange: PropTypes.func,
   label: PropTypes.string,
+  value:PropTypes.string,
   mainButtonClasses: PropTypes.string,
+  data:PropTypes.arrayOf(PropTypes.object).isRequired
 }

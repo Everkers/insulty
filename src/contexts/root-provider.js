@@ -1,6 +1,7 @@
 import React from "react"
 import reducer, { initialState } from "./reducer"
 import AuthProvider from "contexts/Authentication"
+
 const RootContext = React.createContext()
 export const useRootContext = () => {
   const context = React.useContext(RootContext)

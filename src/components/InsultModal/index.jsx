@@ -1,9 +1,12 @@
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
+import {useQueryClient} from 'react-query'
 import Select from "components/Select"
 import { useRootContext } from "contexts/root-provider"
 export default function Example() {
   const { state, dispatch } = useRootContext()
+  const queryClient = useQueryClient()
+  const categories = queryClient.getQueryData('categories')
   const closeModal = () => {
     dispatch({
       type: "set_insult_modal",
@@ -71,7 +74,7 @@ export default function Example() {
                 />
                 <div class='grid flex items-end grid-cols-3 gap-4'>
                   <div class=' col-span-2 '>
-                    <Select mainButtonClasses='dark:bg-gray-700 ' />
+                    <Select defaultValue={categories?.games[0].name} data={categories?.games} mainButtonClasses='dark:bg-gray-700 ' />
                   </div>
                   <button
                     onClick={onSubmit}

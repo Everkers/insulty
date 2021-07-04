@@ -2,6 +2,8 @@ import React from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import Navbar from "components/Navbar"
 import Home from "pages/Home"
+import { FilterProvider } from "contexts/FilterCategories"
+import FullPageLoading from "pages/FullPageLoading"
 const routes = [
   {
     component: Home,
@@ -15,16 +17,18 @@ const AuthenticatedApp = () => {
   return (
     <>
       <Navbar />
-      <React.Suspense fallback={<div>....loading</div>}>
-        <Switch>
-          {routes.map(({ path, exact, component: Component }) => (
-            <Route key={path} path={path} exact={exact}>
-              <Component />
-            </Route>
-          ))}
-          <Redirect to={redirectRoute} exact />
-        </Switch>
-      </React.Suspense>
+      <FilterProvider>
+        <React.Suspense fallback={<FullPageLoading />}>
+          <Switch>
+            {routes.map(({ path, exact, component: Component }) => (
+              <Route key={path} path={path} exact={exact}>
+                <Component />
+              </Route>
+            ))}
+            <Redirect to={redirectRoute} exact />
+          </Switch>
+        </React.Suspense>
+      </FilterProvider>
     </>
   )
 }

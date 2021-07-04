@@ -1,18 +1,29 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { QueryClient, QueryClientProvider } from "react-query"
+import { ReactQueryDevtools } from "react-query/devtools"
 import "./index.css"
 import { BrowserRouter } from "react-router-dom"
 import { RootProvider } from "contexts/root-provider"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+})
 ReactDOM.render(
   <React.StrictMode>
-    <RootProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </RootProvider>
+    <QueryClientProvider client={queryClient}>
+      <RootProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </RootProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 )

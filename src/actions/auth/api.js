@@ -19,7 +19,7 @@ const register = (params) => {
 export const fetchUser = () => {
   return request({
     url: "user/profile",
-    method: "POST",
+    method: "GET",
   })
 }
 
