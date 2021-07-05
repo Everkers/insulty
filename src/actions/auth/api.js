@@ -1,7 +1,6 @@
 import request from "utils/request"
 
 const login = (cords) => {
-  console.log(cords)
   return request({
     url: "user/login",
     method: "POST",

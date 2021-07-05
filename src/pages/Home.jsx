@@ -6,6 +6,8 @@ import { ViewGridIcon } from "@heroicons/react/solid"
 import {useFilterContext} from 'contexts/FilterCategories'
 import { ViewGridIcon as ViewGridIconOutline } from "@heroicons/react/outline"
 import { useCategoriesQuery } from "actions/categories"
+import { useInsultsQuery } from "actions/insults"
+import Loading from "components/Loading"
 const Home = () => {
   // filter
   const {state , dispatch}= useFilterContext()
@@ -13,6 +15,12 @@ const Home = () => {
     dispatch({
       type: "set_category",
       payload: value,
+    })
+  }
+  const resetForm = ()=>{
+    dispatch({
+      type: "set_category",
+      payload: undefined,
     })
   }
   // classes are set to small screens only
@@ -26,10 +34,12 @@ const Home = () => {
     if (gridMode.title === "ONE") setGridMode(gridModes[1])
     else setGridMode(gridModes[0])
   }
-  const {data} = useCategoriesQuery()
+  const {data:categories} = useCategoriesQuery()
+  const {status, data:insults} = useInsultsQuery(state)
     return (
       <div className='py-6'>
         <SlideOver
+        resetForm={resetForm}
           title={"Filter"}
           open={slideOpen}
           onClose={() => setSlideOpen(false)}>
@@ -41,7 +51,7 @@ const Home = () => {
               </p>
             </div>
             <div>
-              <Select value={state.category} data={data?.games} label={"Categories"} onChange={onChange} />
+              <Select value={state.game} data={categories?.games} label={"Categories"} onChange={onChange} />
             </div>
           </div>
         </SlideOver>
@@ -77,13 +87,16 @@ const Home = () => {
               </div>
             </div>
             <ul className={`grid grid-cols-1 gap-6 ${gridMode.class}`}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
+              {status === 'loading' || status ==='idle' ? 
+              <Loading/>  :    insults.Insult.map((item) => {
                 return (
-                  <li key={item} className='col-span-1'>
-                    <InsultCard />
+                  <li key={item._id} className='col-span-1'>
+                    <InsultCard data={item} />
                   </li>
                 )
-              })}
+              })
+            }
+          
             </ul>
           </main>
           <aside className='lg:block hidden  xl:pt-10 md:p-0 px-5  md:col-span-4'>
@@ -98,18 +111,14 @@ const Home = () => {
                 </p>
               </div>
               <div>
-              <Select value={state.category} data={data?.games} label={"Categories"} onChange={onChange} />
+              <Select value={state.game} data={categories?.games} label={"Categories"} onChange={onChange} />
               </div>
               <div className='flex justify-end'>
                 <button
-                  type='button'
-                  className='border-gray-300 border dark:border-gray-800 dark:bg-gray-700 py-2 px-4 rounded-md shadow-sm text-sm font-medium text-gray-800 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none  '>
-                  Clear
-                </button>
-                <button
+                  onClick={resetForm}
                   type='submit'
                   className='ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none '>
-                  Save
+                  Reset
                 </button>
               </div>
             </div>

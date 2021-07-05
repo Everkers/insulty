@@ -2,12 +2,13 @@ import React from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import Navbar from "components/Navbar"
 import Home from "pages/Home"
+import InsultModal from "components/InsultModal"
 import { FilterProvider } from "contexts/FilterCategories"
 import FullPageLoading from "pages/FullPageLoading"
 const routes = [
   {
     component: Home,
-    path: "/home",
+    path: "/",
     exact: true,
   },
 ]
@@ -18,6 +19,8 @@ const AuthenticatedApp = () => {
     <>
       <Navbar />
       <FilterProvider>
+        <InsultModal />
+
         <React.Suspense fallback={<FullPageLoading />}>
           <Switch>
             {routes.map(({ path, exact, component: Component }) => (

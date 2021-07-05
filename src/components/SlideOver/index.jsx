@@ -2,7 +2,7 @@ import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import { Dialog, Transition } from "@headlessui/react"
 import { XIcon } from "@heroicons/react/outline"
-const SlideOver = ({ open, onClose, title = "Panel Title", children }) => {
+const SlideOver = ({ open, onClose, title = "Panel Title", children ,resetForm }) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -49,13 +49,14 @@ const SlideOver = ({ open, onClose, title = "Panel Title", children }) => {
                       type='button'
                       onClick={onClose}
                       className='border-gray-300 border dark:border-gray-800 dark:bg-gray-700 py-2 px-4 rounded-md shadow-sm text-sm font-medium text-gray-800 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none  '>
-                      Cancel
+                      Close
                     </button>
 
                     <button
+                    onClick={resetForm}
                       type='submit'
                       className='ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none '>
-                      Save
+                      Reset
                     </button>
                   </div>
                 </div>

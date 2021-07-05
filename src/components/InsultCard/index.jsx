@@ -1,16 +1,21 @@
 import React, { Fragment } from "react"
+import PropTypes from 'prop-types'
 import {
   DotsVerticalIcon,
   ArrowCircleUpIcon,
   ArrowCircleDownIcon,
   HeartIcon,
 } from "@heroicons/react/outline"
+import {useQueryClient} from 'react-query'
+
 import { Menu, Transition } from "@headlessui/react"
-const InsultCard = () => {
+const InsultCard = ({data}) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ")
   }
-
+  const queryClient = useQueryClient()
+  const categories = queryClient.getQueryData('categories')
+  const category = categories.games.find(game=>game._id === data.game)
   return (
     <div class='bg-white border border-gray-800 dark:border-gray-900 dark:bg-gray-800 py-7 px-5 w-auto min-h-40 rounded-xl'>
       <div class='flex items-center justify-between'>
@@ -98,10 +103,10 @@ const InsultCard = () => {
       </div>
       <div class='my-3.5'>
         <span class='uppercase text-xs font-semibold text-gray-600'>
-          League of legends
+        {category ? category.name : 'N/A' }
         </span>
         <p class='text-xl font-bold dark:text-gray-50 text-gray-800'>
-          Thou cockered shag-haired bugbear!
+          {data.insult}
         </p>
       </div>
       <div class='flex justify-between'>
@@ -115,3 +120,6 @@ const InsultCard = () => {
   )
 }
 export default InsultCard
+InsultCard.prototype = {
+  data:PropTypes.arrayOf(PropTypes.object).isRequired
+}

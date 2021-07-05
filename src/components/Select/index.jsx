@@ -12,8 +12,8 @@ const Select = ({
   onChange = () => {},
   label,
   data=[],
-  value='Select a game',
-  defaultValue='',
+  value,
+  defaultValue='Select a game',
   mainButtonClasses = "dark:bg-gray-800",
 }) => {
 
@@ -30,7 +30,7 @@ const Select = ({
             <Listbox.Button
               className={`dark:border-gray-900 ${mainButtonClasses} bg-white  border border-gray-300 shadow-sm  dark:shadow-none  relative w-full rounded-md pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}>
               <span className='block text-gray-800 dark:text-gray-50 truncate'>
-                { defaultValue || data.find(item=> item._id === value).name   }
+                { value ? data.find(item=> item._id === value).name : defaultValue  }
               </span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                 <SelectorIcon
