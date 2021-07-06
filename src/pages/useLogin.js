@@ -7,7 +7,7 @@ export default function useLoginForm() {
     initialValues: { username: "", password: "" },
     validationSchema: () =>
       Yup.object({
-        username: Yup.string().required("Required"),
+        username: Yup.string().required(),
         password: Yup.string().required(),
       }),
 

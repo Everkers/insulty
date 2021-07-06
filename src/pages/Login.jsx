@@ -2,8 +2,12 @@ import React from "react"
 import { LockClosedIcon } from "@heroicons/react/solid"
 import useLoginForm from "./useLogin"
 import Ilustration from 'assets/images/social.png'
+import _ from 'lodash'
+import { useAuthContext } from "contexts/Authentication"
 const Login = () => {
-  const {handleSubmit,isSubmitting, setFieldValue } =useLoginForm()
+  const {error:backEndError } = useAuthContext()
+  const {handleSubmit,isSubmitting, setFieldValue , errors } =useLoginForm()
+  const errorsMessages = _.values(errors)
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8'>
       <div className='max-w-md w-full space-y-8'>
@@ -25,7 +29,7 @@ const Login = () => {
             </a>
           </p>
         </div>
-        <form onSubmit={handleSubmit} className='mt-8 space-y-6'>
+        <form onSubmit={handleSubmit} className='mt-8 space-y-3'>
           <input type='hidden' name='remember' defaultValue='true' />
           <div className='rounded-md shadow-sm -space-y-px'>
             <div>
@@ -39,7 +43,7 @@ const Login = () => {
                 type='username'
                 required
                 onChange={(e) => setFieldValue("username", e.target.value)}
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                className={`${errors.username && 'border-red-500 border-2' } appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder='Username'
               />
             </div>
@@ -54,28 +58,13 @@ const Login = () => {
                 onChange={(e) => setFieldValue("password", e.target.value)}
                 autoComplete='current-password'
                 required
-                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                className={`${errors.password && 'border-red-500 border-2' } appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder='Password'
               />
             </div>
           </div>
-
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center'>
-              <input
-                id='remember_me'
-                name='remember_me'
-                type='checkbox'
-                className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
-              />
-              <label
-                htmlFor='remember_me'
-                className='ml-2 block text-sm text-gray-400'>
-                Remember me
-              </label>
-            </div>
-          </div>
-
+          {errorsMessages  &&  <p class=' text-red-500 '>{errorsMessages[0]}</p> }
+          {_.isEmpty(errorsMessages) && backEndError?.response.status === 403 ?  <p class=' text-red-500 '>Username or password is invalid</p> : null}
           <div>
             <button
               type='submit'

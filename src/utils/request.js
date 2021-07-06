@@ -25,6 +25,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   ({ data: res, ...response }) => {
     // if is a "success" status code
+    if (response.status === 403) {
+      console.log("working")
+    }
     if (response.status > 100 && response.status < 400) {
       return res
     } else {

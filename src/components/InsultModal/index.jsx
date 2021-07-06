@@ -2,49 +2,22 @@ import React,{ Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import Select from "components/Select"
 import { useRootContext } from "contexts/root-provider"
-import { useFilterContext } from "contexts/FilterCategories"
-import { useMutation , useQueryClient } from "react-query"
-import InsultsAPI from 'actions/insults/api'
-import _ from 'lodash'
+import {  useQueryClient } from "react-query"
 import useInsultCreationForm from "./useForm"
 export default function Example() {
   const { state, dispatch } = useRootContext()
-  const {state:filters } = useFilterContext()
   const queryClient = useQueryClient()
   const categories = queryClient.getQueryData('categories')
-  const {setFieldValue ,values , setSubmitting}= useInsultCreationForm()
-  const { mutateAsync: addInsult } = useMutation(InsultsAPI.add)
+  const {setFieldValue ,values , handleSubmit , errors , setErrors}= useInsultCreationForm()
+  console.log(errors)
   const closeModal = () => {
     dispatch({
       type: "set_insult_modal",
       payload: false,
     })
+    // remove previous errors
+    setErrors({})
   }
-  const onSubmit = React.useCallback(
-  async ()=>{
-    setSubmitting(true)
-    try {
-      const data = await addInsult(values)
-      queryClient.setQueryData(['insults' , filters.game !== undefined ?  {...filters , game:data.insult.game} : {} ], (oldData)=> {
-        const nextData = _.clone(oldData)
-        nextData.Insult.push(data.insult)
-        return nextData 
-      })
-    } catch (err) {
-      console.log(err)
-    } finally {
-      dispatch({
-        type: "set_notification",
-        payload: { message: "Insult have been created", show: true },
-      })
-      dispatch({
-        type: "set_insult_modal",
-        payload: false,
-      })
-      setSubmitting(false)
-    }
-
-  } , [values ,addInsult] )
   return (
     <Transition.Root show={state.insultModalShow} as={Fragment}>
       <Dialog
@@ -89,20 +62,22 @@ export default function Example() {
                   class='rounded-full w-4 h-4 bg-red-500 cursor-pointer'></span>
               </div>
 
-              <div class='mt-5 space-y-4'>
+              <div class='mt-5 space-y-2'>
                 <textarea
+                value={values.insult}
                 onChange={(e)=>{
-              setFieldValue('insult' ,e.target.value )
+                  setFieldValue('insult' ,e.target.value )
                 }}
-                  class='dark:text-gray-300 text-gray-800 outline-none bg-gray-200 dark:bg-gray-900 text-sm w-full py-2 px-2 rounded-md placeholder-gray-700 placeholder-opacity-85'
+                  class={`${errors.insult && 'border-2 border-red-500'} dark:text-gray-300 text-gray-800 outline-none bg-gray-200 dark:bg-gray-900 text-sm w-full py-2 px-2 rounded-md placeholder-gray-700 placeholder-opacity-85`}
                   placeholder='Type something'
                 />
+                {errors.insult && <p class=' text-red-500'>{errors.insult}</p>}
                 <div class='grid flex items-end grid-cols-3 gap-4'>
                   <div class=' col-span-2 '>
                     <Select onChange={(value)=> setFieldValue('game' ,value )} value={values.game}  data={categories?.games} mainButtonClasses='dark:bg-gray-700 ' />
                   </div>
                   <button
-                    onClick={onSubmit}
+                    onClick={handleSubmit}
                     type='button'
                     className='items-center border border-transparent py-3 rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none'>
                     Create
@@ -111,7 +86,7 @@ export default function Example() {
               </div>
             </div>
           </Transition.Child>
-        </div>
+        </div> 
       </Dialog>
     </Transition.Root>
   )
