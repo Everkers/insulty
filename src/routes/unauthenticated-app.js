@@ -20,8 +20,8 @@ const UnauthenticatedApp = () => {
   const location = useLocation()
   return (
     <React.Suspense fallback={<div>....loading</div>}>
-      <AnimatePresence exitBeforeEnter>
-        <Switch key={location.pathname}>
+      <AnimatePresence initial={false} exitBeforeEnter>
+        <Switch location={location} key={location.pathname}>
           {routes.map(({ path, exact, component: Component }) => (
             <Route key={path} path={path} exact={exact}>
               <Component />

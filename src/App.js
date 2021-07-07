@@ -14,7 +14,7 @@ const App = () => {
     return <FullPageLoading />
   }
   return (
-    <div class='bg-white dark:bg-gray-900 min-h-screen'>
+    <div class='bg-white overflow-hidden dark:bg-gray-900 min-h-screen'>
       <Notification
         close={() =>
           dispatch({

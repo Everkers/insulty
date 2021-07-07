@@ -12,7 +12,16 @@ const Register = () => {
     useRegisterForm()
   const errorsMessages = _.values(errors)
   return (
-    <motion.div exit={{ opacity: 0 }}>
+    <motion.div
+      initial={"hidden"}
+      animate='enter'
+      variants={{
+        hidden: { opacity: 0, x: 200, y: 0 },
+        enter: { opacity: 1, x: 0, y: 0 },
+        exit: { opacity: 0, x: 200, y: 0 },
+      }}
+      exit={"exit"}
+      transition={{ ease: "easeInOut", bounce: 0.25 }}>
       <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-md w-full space-y-8'>
           <div>
