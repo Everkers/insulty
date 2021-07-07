@@ -1,4 +1,3 @@
-import "styles/output.css"
 import { AUTH_STATUS, useAuthContext } from "contexts/Authentication"
 import UnAthenticatedApp from "routes/unauthenticated-app"
 import AthenticatedApp from "routes/authenticated-app"
