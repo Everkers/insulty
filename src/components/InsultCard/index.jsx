@@ -1,23 +1,23 @@
 import React, { Fragment } from "react"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 import {
   DotsVerticalIcon,
   ArrowCircleUpIcon,
   ArrowCircleDownIcon,
   HeartIcon,
 } from "@heroicons/react/outline"
-import {useQueryClient} from 'react-query'
+import { useQueryClient } from "react-query"
 
 import { Menu, Transition } from "@headlessui/react"
-const InsultCard = ({data}) => {
+const InsultCard = ({ data }) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ")
   }
   const queryClient = useQueryClient()
-  const categories = queryClient.getQueryData('categories')
-  const category = categories.games.find(game=>game._id === data.game)
+  const categories = queryClient.getQueryData("categories")
+  const category = categories.games.find((game) => game._id === data.game)
   return (
-    <div class='bg-white border border-gray-800 dark:border-gray-900 dark:bg-gray-800 py-7 px-5 w-auto min-h-40 rounded-xl'>
+    <div class='bg-white border border-gray-800 dark:border-gray-900 dark:bg-gray-800 py-7 px-5 w-auto h-50 rounded-xl'>
       <div class='flex items-center justify-between'>
         <div class='flex items-center font-bold space-x-3'>
           <img
@@ -25,7 +25,9 @@ const InsultCard = ({data}) => {
             src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
             alt=''
           />
-          <span class='text-sm text-gray-800 dark:text-gray-50'>{data.owner ? data.owner.username : 'Anonymous'}</span>
+          <span class='text-sm text-gray-800 dark:text-gray-50'>
+            {data.owner ? data.owner.username : "Anonymous"}
+          </span>
         </div>
         <span class='ml-auto'>
           <Menu as='div' className='relative inline-block text-left'>
@@ -53,8 +55,7 @@ const InsultCard = ({data}) => {
                     <div className='py-1'>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href='#'
+                          <span
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -62,13 +63,12 @@ const InsultCard = ({data}) => {
                               "block px-4 py-2 text-sm"
                             )}>
                             Edit
-                          </a>
+                          </span>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href='#'
+                          <span
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -76,13 +76,12 @@ const InsultCard = ({data}) => {
                               "block px-4 py-2 text-sm"
                             )}>
                             Delete
-                          </a>
+                          </span>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href='#'
+                          <span
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -90,7 +89,7 @@ const InsultCard = ({data}) => {
                               "block px-4 py-2 text-sm"
                             )}>
                             Add to board
-                          </a>
+                          </span>
                         )}
                       </Menu.Item>
                     </div>
@@ -103,7 +102,7 @@ const InsultCard = ({data}) => {
       </div>
       <div class='my-3.5'>
         <span class='uppercase text-xs font-semibold text-gray-600'>
-        {category ? category.name : 'N/A' }
+          {category ? category.name : "N/A"}
         </span>
         <p class='text-xl font-bold dark:text-gray-50 text-gray-800'>
           {data.insult}
@@ -121,5 +120,5 @@ const InsultCard = ({data}) => {
 }
 export default InsultCard
 InsultCard.prototype = {
-  data:PropTypes.arrayOf(PropTypes.object).isRequired
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

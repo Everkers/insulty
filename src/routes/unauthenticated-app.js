@@ -1,10 +1,17 @@
 import React from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import LoginPage from "pages/Login"
+import Register from "pages/Register"
+
 const routes = [
   {
     component: LoginPage,
     path: "/login",
+    exact: true,
+  },
+  {
+    component: Register,
+    path: "/register",
     exact: true,
   },
 ]

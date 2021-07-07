@@ -32,7 +32,15 @@ export const AuthProvider = ({ children }) => {
       dispatch(createAction("set_error", err))
     }
   }, [])
-
+  const register = React.useCallback(async (cords) => {
+    try {
+      const { token, user } = await authAPI.register(cords)
+      authStorage.persist(token)
+      dispatch(createAction("set_user", user))
+    } catch (err) {
+      dispatch(createAction("set_error", err))
+    }
+  }, [])
   const logout = React.useCallback(async () => {
     try {
       await authAPI.logout()
@@ -54,7 +62,6 @@ export const AuthProvider = ({ children }) => {
         try {
           dispatch(createAction("set_pending"))
           const { user } = await authAPI.fetchUser()
-          console.log(user)
           dispatch(createAction("set_user", user))
         } catch (err) {
           await logout()
@@ -69,12 +76,13 @@ export const AuthProvider = ({ children }) => {
       error,
       user,
       status,
+      register,
       token,
       authenticated,
       login,
       logout,
     }),
-    [authenticated, error, login, logout, status, token, user]
+    [authenticated, register, error, login, logout, status, token, user]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

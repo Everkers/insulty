@@ -8,11 +8,11 @@ const login = (cords) => {
   })
 }
 
-const register = (params) => {
+const register = (cords) => {
   return request({
     url: "user/register",
     method: "POST",
-    params: { params },
+    data: cords,
   })
 }
 export const fetchUser = () => {
@@ -22,8 +22,9 @@ export const fetchUser = () => {
   })
 }
 
-export default {
+const authAPI = {
   login,
   register,
   fetchUser,
 }
+export default authAPI

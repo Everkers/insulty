@@ -36,7 +36,6 @@ export default function useInsultCreationForm() {
           }
         )
       } catch (err) {
-        console.log(err)
       } finally {
         resetForm({})
         dispatch({

@@ -1,13 +1,14 @@
 import React from "react"
 import { LockClosedIcon } from "@heroicons/react/solid"
-import useLoginForm from "./useLogin"
-import Ilustration from "assets/images/social.png"
+import useRegisterForm from "./useRegister"
+import Ilustration from "assets/images/Saly-32.png"
 import _ from "lodash"
-import { Link } from "react-router-dom"
 import { useAuthContext } from "contexts/Authentication"
-const Login = () => {
+import { Link } from "react-router-dom"
+const Register = () => {
   const { error: backEndError } = useAuthContext()
-  const { handleSubmit, isSubmitting, setFieldValue, errors } = useLoginForm()
+  const { handleSubmit, isSubmitting, setFieldValue, errors } =
+    useRegisterForm()
   const errorsMessages = _.values(errors)
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8'>
@@ -19,14 +20,14 @@ const Login = () => {
             alt='Workflow'
           />
           <h2 className=' mt-3 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-50'>
-            Sign in to your account
+            Create a new account
           </h2>
           <p className='mt-2 text-center text-sm text-gray-600'>
             Or{" "}
             <Link
-              to='/register'
+              to='/login'
               className='font-medium text-indigo-600 hover:text-indigo-500'>
-              create new account
+              Log into your account
             </Link>
           </p>
         </div>
@@ -70,8 +71,8 @@ const Login = () => {
           </div>
           {errorsMessages && <p class=' text-red-500 '>{errorsMessages[0]}</p>}
           {_.isEmpty(errorsMessages) &&
-          backEndError?.response.status === 403 ? (
-            <p class=' text-red-500 '>Username or password is invalid</p>
+          backEndError?.response.status === 400 ? (
+            <p class=' text-red-500 '>This username is already exists </p>
           ) : null}
           <div>
             <button
@@ -93,4 +94,4 @@ const Login = () => {
     </div>
   )
 }
-export default Login
+export default Register
