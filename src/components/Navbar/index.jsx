@@ -1,12 +1,13 @@
 import React, { Fragment } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { MenuIcon, XIcon } from "@heroicons/react/outline"
-import { useRootContext } from "contexts/root-provider"
+import { useRootContext, useInsultTypes } from "contexts/root-provider"
 import { PlusIcon } from "@heroicons/react/solid"
 import { useAuthContext } from "contexts/Authentication"
 import DarkThemeButton from "./darkThemeButton"
+import { showInsultModal } from "utils/dispatch"
 const Navbar = () => {
-  const {logout} = useAuthContext()
+  const { logout } = useAuthContext()
   const { dispatch } = useRootContext()
   const user = {
     name: "Tom Cook",
@@ -27,7 +28,7 @@ const Navbar = () => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ")
   }
-
+  const insultTypes = useInsultTypes()
   return (
     <Disclosure
       as='nav'
@@ -63,10 +64,7 @@ const Navbar = () => {
                 <div className='flex-shrink-0'>
                   <button
                     onClick={() => {
-                      dispatch({
-                        type: "set_insult_modal",
-                        payload: true,
-                      })
+                      showInsultModal(dispatch, insultTypes.ADD)
                     }}
                     type='button'
                     className='relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500'>

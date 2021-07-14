@@ -7,15 +7,28 @@ import {
   HeartIcon,
 } from "@heroicons/react/outline"
 import { useQueryClient } from "react-query"
-
+import { useRootContext, useInsultTypes } from "contexts/root-provider"
 import { Menu, Transition } from "@headlessui/react"
+import { showInsultModal } from "utils/dispatch"
+import useCurrentUser from "hooks/useCurrentUser"
 const InsultCard = ({ data }) => {
+  const currentUser = useCurrentUser()
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ")
   }
   const queryClient = useQueryClient()
   const categories = queryClient.getQueryData("categories")
   const category = categories.games.find((game) => game._id === data.game)
+  const { dispatch } = useRootContext()
+  const insultTypes = useInsultTypes()
+  const handleEdit = () => {
+    showInsultModal(dispatch, insultTypes.EDIT, data._id)
+  }
+  const options = [
+    { title: "Edit", private: true, fun: handleEdit },
+    { title: "Delete", private: true, fun: () => {} },
+    { title: "Add to favorite", private: false, fun: () => {} },
+  ]
   return (
     <div class='bg-white border border-gray-800 dark:border-gray-900 dark:bg-gray-800 py-7 px-5 w-auto h-50 rounded-xl'>
       <div class='flex items-center justify-between'>
@@ -53,45 +66,32 @@ const InsultCard = ({ data }) => {
                     static
                     className='origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
                     <div className='py-1'>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <span
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}>
-                            Edit
-                          </span>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <span
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}>
-                            Delete
-                          </span>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <span
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}>
-                            Add to board
-                          </span>
-                        )}
-                      </Menu.Item>
+                      {options.map((option, index) => {
+                        if (
+                          option.private &&
+                          currentUser._id !== data.owner?._id
+                        ) {
+                          return false
+                        } else {
+                          return (
+                            <Menu.Item
+                              onClick={option.fun}
+                              key={`${option.title}-${index} `}>
+                              {({ active }) => (
+                                <span
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}>
+                                  {option.title}
+                                </span>
+                              )}
+                            </Menu.Item>
+                          )
+                        }
+                      })}
                     </div>
                   </Menu.Items>
                 </Transition>

@@ -10,6 +10,19 @@ const all = (filters) => {
       : filters,
   })
 }
+const one = (id) => {
+  return request({
+    url: `insult/${id}`,
+    method: "GET",
+  })
+}
+const edit = ({ values, id }) => {
+  return request({
+    url: `insult/${id}`,
+    method: "PATCH",
+    data: values,
+  })
+}
 const add = (insult) => {
   return request({
     url: "insult/new",
@@ -20,6 +33,8 @@ const add = (insult) => {
 
 const InsultsAPI = {
   all,
+  one,
   add,
+  edit,
 }
 export default InsultsAPI

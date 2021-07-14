@@ -13,6 +13,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "lodash": "^4.17.21",
+    "node-sass": "^6.0.1",
     "prettier": "^2.3.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

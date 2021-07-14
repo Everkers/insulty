@@ -39,9 +39,6 @@ export default function Notification({ message, close, isVisible }) {
                     <p className='text-sm font-medium text-gray-900'>
                       {message}
                     </p>
-                    <p className='mt-1 text-sm text-gray-500'>
-                      Anyone with a link can now view this file.
-                    </p>
                   </div>
                   <div className='ml-4 flex-shrink-0 flex'>
                     <button

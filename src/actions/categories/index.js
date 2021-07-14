@@ -4,5 +4,6 @@ export const useCategoriesQuery = () => {
   return useQuery("categories", () => categoriesAPI.all(), {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    suspense: true,
   })
 }

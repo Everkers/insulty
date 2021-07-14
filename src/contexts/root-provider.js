@@ -1,8 +1,9 @@
 import React from "react"
-import reducer, { initialState } from "./reducer"
+import reducer, { initialState, INSULT_TYPES } from "./reducer"
 import AuthProvider from "contexts/Authentication"
 
 const RootContext = React.createContext()
+export const useInsultTypes = () => INSULT_TYPES
 export const useRootContext = () => {
   const context = React.useContext(RootContext)
   if (!context) {

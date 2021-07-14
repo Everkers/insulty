@@ -1,10 +1,11 @@
 import React from "react"
-import { Switch, Route, Redirect } from "react-router-dom"
+import { Switch, Route, Redirect, useLocation } from "react-router-dom"
 import Navbar from "components/Navbar"
 import Home from "pages/Home"
 import InsultModal from "components/InsultModal"
 import { FilterProvider } from "contexts/FilterCategories"
 import FullPageLoading from "pages/FullPageLoading"
+import { AnimatePresence } from "framer-motion"
 const routes = [
   {
     component: Home,
@@ -15,21 +16,23 @@ const routes = [
 // route to redirect to incase we didn't find target route
 const redirectRoute = routes[0].path
 const AuthenticatedApp = () => {
+  const location = useLocation()
   return (
     <>
       <Navbar />
       <FilterProvider>
-        <InsultModal />
-
         <React.Suspense fallback={<FullPageLoading />}>
-          <Switch>
-            {routes.map(({ path, exact, component: Component }) => (
-              <Route key={path} path={path} exact={exact}>
-                <Component />
-              </Route>
-            ))}
-            <Redirect to={redirectRoute} exact />
-          </Switch>
+          <InsultModal />
+          <AnimatePresence exitBeforeEnter>
+            <Switch location={location} key={location.pathname}>
+              {routes.map(({ path, exact, component: Component }) => (
+                <Route key={path} path={path} exact={exact}>
+                  <Component />
+                </Route>
+              ))}
+              <Redirect to={redirectRoute} exact />
+            </Switch>
+          </AnimatePresence>
         </React.Suspense>
       </FilterProvider>
     </>

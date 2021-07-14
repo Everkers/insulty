@@ -25,7 +25,6 @@ export const authStorage = {
     try {
       return {
         token: localStorage.getItem("token"),
-        tokenExpDate: localStorage.getItem("tokenExpDate"),
       }
     } catch (err) {
       console.error(err)

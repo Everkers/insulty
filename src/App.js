@@ -10,6 +10,7 @@ const App = () => {
   useDarkTheme()
   const { authenticated, status: authStatus } = useAuthContext()
   const { state, dispatch } = useRootContext()
+
   if (authStatus === AUTH_STATUS.IDLE || authStatus === AUTH_STATUS.PENDING) {
     return <FullPageLoading />
   }

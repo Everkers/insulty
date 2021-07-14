@@ -1,10 +1,18 @@
+export const INSULT_TYPES = {
+  ADD: "ADD",
+  EDIT: "EDIT",
+}
 export const initialState = {
   notification: {
     show: false,
     message: null,
     authenticated: false,
   },
-  insultModalShow: false,
+  insultModal: {
+    type: INSULT_TYPES.ADD,
+    show: false,
+    insultId: null,
+  },
 }
 export default function reducer(state, action) {
   switch (action.type) {
@@ -21,7 +29,7 @@ export default function reducer(state, action) {
     case "set_insult_modal":
       return {
         ...state,
-        insultModalShow: action.payload,
+        insultModal: action.payload,
       }
     default:
       return state

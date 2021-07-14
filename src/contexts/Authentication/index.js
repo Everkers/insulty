@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
   const login = React.useCallback(async (cords) => {
     try {
       const { token, user } = await authAPI.login(cords)
+      dispatch(createAction("set_pending"))
       authStorage.persist(token)
       dispatch(createAction("set_user", user))
     } catch (err) {

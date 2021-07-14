@@ -7,13 +7,7 @@ import { BrowserRouter } from "react-router-dom"
 import { RootProvider } from "contexts/root-provider"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-    },
-  },
-})
+const queryClient = new QueryClient()
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>

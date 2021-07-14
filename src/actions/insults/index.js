@@ -6,5 +6,13 @@ export const useInsultsQuery = (filters) => {
   return useQuery(["insults", state], () => InsultsAPI.all(filters), {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    suspense: true,
+  })
+}
+export const useInsultQuery = (id) => {
+  return useQuery(["insults", id], () => InsultsAPI.one(id), {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    enabled: false,
   })
 }
