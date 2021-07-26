@@ -2,6 +2,7 @@ import React from "react"
 import { Switch, Route, Redirect, useLocation } from "react-router-dom"
 import Navbar from "components/Navbar"
 import Home from "pages/Home"
+import View from "pages/View"
 import InsultModal from "components/InsultModal"
 import { FilterProvider } from "contexts/FilterCategories"
 import FullPageLoading from "pages/FullPageLoading"
@@ -10,6 +11,11 @@ const routes = [
   {
     component: Home,
     path: "/",
+    exact: true,
+  },
+  {
+    component: View,
+    path: "/insult/:id",
     exact: true,
   },
 ]
@@ -23,7 +29,7 @@ const AuthenticatedApp = () => {
       <FilterProvider>
         <React.Suspense fallback={<FullPageLoading />}>
           <InsultModal />
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence initial={false} exitBeforeEnter>
             <Switch location={location} key={location.pathname}>
               {routes.map(({ path, exact, component: Component }) => (
                 <Route key={path} path={path} exact={exact}>

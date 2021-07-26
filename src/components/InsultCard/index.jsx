@@ -3,30 +3,44 @@ import PropTypes from "prop-types"
 import {
   DotsVerticalIcon,
   ArrowCircleUpIcon,
-  ArrowCircleDownIcon,
   HeartIcon,
 } from "@heroicons/react/outline"
 import { useQueryClient } from "react-query"
 import { useRootContext, useInsultTypes } from "contexts/root-provider"
+import { useFilterContext } from "contexts/FilterCategories"
 import { Menu, Transition } from "@headlessui/react"
-import { showInsultModal } from "utils/dispatch"
+import { notification, showInsultModal } from "utils/dispatch"
 import useCurrentUser from "hooks/useCurrentUser"
+import { useDeleteMutation, useLikeMutation } from "actions/insults"
 const InsultCard = ({ data }) => {
   const currentUser = useCurrentUser()
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ")
   }
+  const { state: filters } = useFilterContext()
   const queryClient = useQueryClient()
   const categories = queryClient.getQueryData("categories")
   const category = categories.games.find((game) => game._id === data.game)
   const { dispatch } = useRootContext()
   const insultTypes = useInsultTypes()
+  const filter =
+    filters.game !== undefined ? { ...filters, game: data.game } : {}
+  const { mutateAsync: deleteInsult } = useDeleteMutation(filter, () =>
+    notification(dispatch, "Insult has been deleted")
+  )
+  const { mutateAsync: likeInsult } = useLikeMutation(filter)
   const handleEdit = () => {
     showInsultModal(dispatch, insultTypes.EDIT, data._id)
   }
+  const handleDelete = () => {
+    deleteInsult(data._id)
+  }
+  const handleLike = () => {
+    likeInsult(data._id)
+  }
   const options = [
     { title: "Edit", private: true, fun: handleEdit },
-    { title: "Delete", private: true, fun: () => {} },
+    { title: "Delete", private: true, fun: handleDelete },
     { title: "Add to favorite", private: false, fun: () => {} },
   ]
   return (
@@ -110,8 +124,12 @@ const InsultCard = ({ data }) => {
       </div>
       <div class='flex justify-between'>
         <div class='flex space-x-2'>
-          <ArrowCircleUpIcon class='h-6 cursor-pointer w-6 text-indigo-600' />
-          <ArrowCircleDownIcon class='h-6  cursor-pointer w-6 text-gray-600' />
+          <ArrowCircleUpIcon
+            onClick={handleLike}
+            class={`h-6 cursor-pointer w-6 text-gray-600 ${
+              data.liked && "text-indigo-600"
+            } `}
+          />
         </div>
         <HeartIcon class='h-6 w-6 cursor-pointer  text-gray-600 mr-2' />
       </div>

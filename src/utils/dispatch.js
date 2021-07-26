@@ -4,10 +4,10 @@ export const notification = (dispatch, message) => {
     payload: { message, show: true },
   })
 }
-export const showInsultModal = (dispatch, type, insultId) => {
+export const showInsultModal = (dispatch, type, insultId, defaultGame) => {
   dispatch({
     type: "set_insult_modal",
-    payload: { type, show: true, insultId },
+    payload: { type, show: true, insultId, defaultGame },
   })
 }
 

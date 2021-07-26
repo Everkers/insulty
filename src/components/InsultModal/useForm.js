@@ -7,14 +7,15 @@ import { useMutation, useQueryClient } from "react-query"
 import InsultsAPI from "actions/insults/api"
 import { notification, hideInsultModal } from "utils/dispatch"
 export default function useInsultCreationForm(type, id) {
-  const { dispatch } = useRootContext()
+  const { state, dispatch } = useRootContext()
   const insultTypes = useInsultTypes()
   const { state: filters } = useFilterContext()
   const { mutateAsync: addInsult } = useMutation(InsultsAPI.add)
   const { mutateAsync: editInsult } = useMutation(InsultsAPI.edit)
   const queryClient = useQueryClient()
   return useFormik({
-    initialValues: { game: "60d5e456b3440128f047081e", insult: "" },
+    initialValues: { game: state.insultModal.defaultGame, insult: "" },
+    enableReinitialize: true,
     validationSchema: () =>
       Yup.object({
         game: Yup.string(),

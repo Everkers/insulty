@@ -23,6 +23,12 @@ const edit = ({ values, id }) => {
     data: values,
   })
 }
+const remove = (id) => {
+  return request({
+    url: `insult/${id}`,
+    method: "DELETE",
+  })
+}
 const add = (insult) => {
   return request({
     url: "insult/new",
@@ -30,11 +36,19 @@ const add = (insult) => {
     data: insult,
   })
 }
+const like = (id) => {
+  return request({
+    url: `insult/${id}/like`,
+    method: "POST",
+  })
+}
 
 const InsultsAPI = {
   all,
   one,
   add,
+  remove,
   edit,
+  like,
 }
 export default InsultsAPI

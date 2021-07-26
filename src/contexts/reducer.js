@@ -12,6 +12,7 @@ export const initialState = {
     type: INSULT_TYPES.ADD,
     show: false,
     insultId: null,
+    defaultGame: "60d5e456b3440128f047081e",
   },
 }
 export default function reducer(state, action) {
